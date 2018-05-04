@@ -128,9 +128,15 @@ plt.show()
 rows = img.shape[0]
 cols = img.shape[1]
 
-img2 = add_noise(img)
-
-plt.imshow(img2)
-plt.show()
-
-draw_hist([img, img2])
+noise_or_not = input("You want to add noise to the image?")
+if(noise_or_not.lower() == "yes"):
+    img2 = add_noise(img)
+    plt.imshow(img2)
+    plt.show()
+    draw_hist([img, img2])
+else:
+    imgPath = input("give argument to the second image: ")
+    img2 = cv2.imread(imgPath)
+    plt.imshow(img2)
+    plt.show()
+    draw_hist([img, img2])
