@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import random
 import sys
+import math as m
 
 def draw_hist(images):
     img  = images[0]
@@ -83,6 +84,20 @@ def draw_hist(images):
                 # plt.imshow("Plot")
     plt.show()
 
+def gamma_correction(img):
+    img = cv2.resize(img, (0,0), fx = 0.5, fy = 0.5)
+    rows = img.shape[0]
+    cols = img.shape[1]
+
+    for k in range(channels):
+        for i in range(rows):
+            for j in range(cols):
+                img[i][j][k] = m.pow(img[i][j][k], 1.0/2.2)
+
+    img = cv2.resize(img, (0,0), fx = 2.0, fy = 2.0)
+    return img
+
+
 def add_noise(img):
     '''
     adds noise randomly
@@ -128,6 +143,9 @@ plt.show()
 rows = img.shape[0]
 cols = img.shape[1]
 
+img2 = gamma_correction(img)
+
+'''
 noise_or_not = input("You want to add noise to the image?")
 if(noise_or_not.lower() == "yes"):
     img2 = add_noise(img)
@@ -140,3 +158,8 @@ else:
     plt.imshow(img2)
     plt.show()
     draw_hist([img, img2])
+'''
+
+plt.imshow(img2)
+plt.show()
+draw_hist([img, img2])
