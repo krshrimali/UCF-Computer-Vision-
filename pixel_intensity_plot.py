@@ -44,39 +44,39 @@ def draw_hist(images):
     
                 if(k == 0):
                     channel = 'Blue'
-                    plt.subplot(611)
+                    plt.subplot(231)
                     plt.plot(histogram, color='b', label='BLUE CHANNEL')
                     plt.legend(loc="upper right")
         
                 elif(k == 1):
                     channel = 'Green'
-                    plt.subplot(612)
+                    plt.subplot(232)
                     plt.plot(histogram, color='g', label='GREEN CHANNEL')
                     plt.legend(loc="upper right")
     
                 elif(k == 2):
                     channel = 'Red'
-                    plt.subplot(613)
+                    plt.subplot(233)
                     plt.plot(histogram, color='r', label='RED CHANNEL')
                     plt.legend(loc="upper right")
     
             if index == 1:
                 if(k == 0):
                     channel = 'Blue'
-                    plt.subplot(614)
-                    plt.plot(histogram2, color='b', label='BLUE CHANNEL')
+                    plt.subplot(234)
+                    plt.plot(histogram2, color='b', label='BLUE CHANNEL - NOISY')
                     plt.legend(loc="upper right")
         
                 elif(k == 1):
                     channel = 'Green'
-                    plt.subplot(615)
-                    plt.plot(histogram2, color='g', label='GREEN CHANNEL')
+                    plt.subplot(235)
+                    plt.plot(histogram2, color='g', label='GREEN CHANNEL - NOISY')
                     plt.legend(loc="upper right")
     
                 elif(k == 2):
                     channel = 'Red'
-                    plt.subplot(616)
-                    plt.plot(histogram2, color='r', label='RED CHANNEL')
+                    plt.subplot(236)
+                    plt.plot(histogram2, color='r', label='RED CHANNEL - NOISY')
                     plt.legend(loc="upper right")
     
                 # plt.imshow("Plot")    
