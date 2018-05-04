@@ -1,11 +1,10 @@
 import cv2
 import sys
 import matplotlib.pyplot as plt
+import numpy as np
+import random
 
 img = cv2.imread(sys.argv[1])
-
-rows = img.shape[0]
-cols = img.shape[1]
 
 histogram = []
 
@@ -14,6 +13,32 @@ channels = img.shape[2]
 
 # print(img[0][10])
 # considering only 1 channel
+
+plt.imshow(img)
+plt.show()
+
+# resize image to 50% down (resolution) to perform operations
+# reduces cost and time complexity
+
+img = cv2.resize(img, (0,0), fx = 0.5, fy = 0.5)
+rows = img.shape[0]
+cols = img.shape[1]
+
+for k in range(channels):
+    for i in range(rows):
+        for j in range(cols):
+            inc = random.randint(0, 100)
+            if(img[i][j][k] + inc < 255):
+                img[i][j][k] += inc
+            else:
+                img[i][j][k] -= inc
+
+img = cv2.resize(img, (0,0), fx = 2.0, fy = 2.0)
+rows = img.shape[0]
+cols = img.shape[1]
+
+plt.imshow(img)
+plt.show()
 
 for k in range(channels):
     if(k == 0):
