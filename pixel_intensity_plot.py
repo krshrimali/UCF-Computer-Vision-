@@ -45,39 +45,39 @@ def draw_hist(images):
     
                 if(k == 0):
                     channel = 'Blue'
-                    plt.subplot(231)
+                    plt.subplot(131)
                     plt.plot(histogram, color='b', label='BLUE CHANNEL')
                     plt.legend(loc="upper right")
         
                 elif(k == 1):
                     channel = 'Green'
-                    plt.subplot(232)
+                    plt.subplot(132)
                     plt.plot(histogram, color='g', label='GREEN CHANNEL')
                     plt.legend(loc="upper right")
     
                 elif(k == 2):
                     channel = 'Red'
-                    plt.subplot(233)
+                    plt.subplot(133)
                     plt.plot(histogram, color='r', label='RED CHANNEL')
                     plt.legend(loc="upper right")
     
             if index == 1:
                 if(k == 0):
                     channel = 'Blue'
-                    plt.subplot(234)
-                    plt.plot(histogram2, color='b', label='BLUE CHANNEL - NOISY')
+                    plt.subplot(131)
+                    plt.plot(histogram2, color = 'b', ls = '--', label='BLUE CHANNEL(NEW)')
                     plt.legend(loc="upper right")
         
                 elif(k == 1):
                     channel = 'Green'
-                    plt.subplot(235)
-                    plt.plot(histogram2, color='g', label='GREEN CHANNEL - NOISY')
+                    plt.subplot(132)
+                    plt.plot(histogram2, color = 'g', ls = '--', label='GREEN CHANNEL(NEW)')
                     plt.legend(loc="upper right")
     
                 elif(k == 2):
                     channel = 'Red'
-                    plt.subplot(236)
-                    plt.plot(histogram2, color='r', label='RED CHANNEL - NOISY')
+                    plt.subplot(133)
+                    plt.plot(histogram2, color = 'r', ls = '--', label='RED CHANNEL(NEW)')
                     plt.legend(loc="upper right")
     
                 # plt.imshow("Plot")    
@@ -143,9 +143,8 @@ plt.show()
 rows = img.shape[0]
 cols = img.shape[1]
 
-img2 = gamma_correction(img)
+# img2 = gamma_correction(img)
 
-'''
 noise_or_not = input("You want to add noise to the image?")
 if(noise_or_not.lower() == "yes"):
     img2 = add_noise(img)
@@ -158,8 +157,9 @@ else:
     plt.imshow(img2)
     plt.show()
     draw_hist([img, img2])
-'''
 
+'''
 plt.imshow(img2)
 plt.show()
 draw_hist([img, img2])
+'''
