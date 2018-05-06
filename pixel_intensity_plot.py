@@ -1,3 +1,9 @@
+'''
+@author: Kushashwa Ravi Shrimali
+UCF Computer Vision Course + Computer Vision Algorithms and Applications, Richard Szeliski 
+Next TO-DO: Compositing Equation : C = (1 - alpha)*B + alpha*F, B is background and Foreground F
+'''
+
 import cv2
 import sys
 import matplotlib.pyplot as plt
@@ -5,7 +11,7 @@ import numpy as np
 import random
 import sys
 import math as m
-
+import utils
 def cumsum(h):
     # credits:://gist.github.com/bistaumanga/6309599 
     list_ = []
@@ -149,9 +155,10 @@ def add_noise(img):
     parameters: image read
     return type: new image (with added noise)
     '''
-    img = cv2.resize(img, (0,0), fx = 0.5, fy = 0.5)
-    rows = img.shape[0]
-    cols = img.shape[1]
+    img      = cv2.resize(img, (0,0), fx = 0.5, fy = 0.5)
+    rows     = img.shape[0]
+    cols     = img.shape[1]
+    channels = img.shape[2]
 
     for k in range(channels):
         for i in range(rows):
@@ -165,59 +172,91 @@ def add_noise(img):
     img = cv2.resize(img, (0,0), fx = 2.0, fy = 2.0)
     return img
 
-img = cv2.imread(sys.argv[1])
+def over_operator():
+    '''
+    Porter and Duff (1984)
+    Blinn (1994a, 1994b)
+    '''
+    '''
+    B                         = input("Background image path: ")
+    F                         = input("Foreground image path: ")
+    transparency_factor_alpha = float(input("Transparency Factor alpha: "))
+    '''
+    B = "/home/krshrimali/Pictures/background.jpg"
+    F = "/home/krshrimali/Pictures/Kush.jpg"
+    transparency_factor_alpha = float(0.5)
 
-histogram = []
+    B_img                     = cv2.imread(B)
+    F_img                     = cv2.imread(F)
+    
+    B_img                     = cv2.resize(B_img, (400, 400), interpolation = cv2.INTER_AREA)
+    F_img                     = cv2.resize(F_img, (400, 400), interpolation = cv2.INTER_AREA)
+    C                         = cv2.addWeighted(B_img, 1 - transparency_factor_alpha,
+            F_img, transparency_factor_alpha, 0)
 
-# img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-channels = img.shape[2]
+    # C = (1 - transparency_factor_alpha) * B_img + transparency_factor_alpha * F_img
+    
+    utils.show(B)
+    utils.show(F)
+    utils.show(C,0)
 
-# print(img[0][10])
-# considering only 1 channel
-
-plt.imshow(img)
-plt.show()
-
-# resize image to 50% down (resolution) to perform operations
-# reduces cost and time complexity
-
-# draw_hist(img)
-
-rows = img.shape[0]
-cols = img.shape[1]
-
-# img2 = gamma_correction(img)
-'''
-noise_or_not = input("You want to add noise to the image?")
-if(noise_or_not.lower() == "yes"):
-    img2 = add_noise(img)
+def main():
+    img = cv2.imread(sys.argv[1])
+    
+    histogram = []
+    
+    # img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    channels = img.shape[2]
+    
+    # print(img[0][10])
+    # considering only 1 channel
+    
+    plt.imshow(img)
+    plt.show()
+    
+    # resize image to 50% down (resolution) to perform operations
+    # reduces cost and time complexity
+    
+    # draw_hist(img)
+    
+    rows = img.shape[0]
+    cols = img.shape[1]
+    
+    # img2 = gamma_correction(img)
+    
+    noise_or_not = input("You want to add noise to the image?")
+    if(noise_or_not.lower() == "yes"):
+        img2 = add_noise(img)
+        plt.imshow(img2)
+        plt.show()
+        draw_hist([img, img2])
+    else:
+        imgPath = input("give argument to the second image: ")
+        img2 = cv2.imread(imgPath)
+        plt.imshow(img2)
+        plt.show()
+        draw_hist([img, img2])
+    
+    over_operator()
+    '''
+    print("Now applying cdf to the original image, histogram equalization ")
+    new_img, original_hist, new_hist, transform_func = equalize_hist(img)
+        
+    cv2.imshow("new_img", new_img)
+    cv2.imwrite("new_img.png", new_img)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+    
+    plt.plot(original_hist, color = 'b', ls = '--', label = 'Original Histogram')
+    plt.legend(loc="upper right")
+    plt.plot(new_hist, color = 'r', label = 'New Histogram')
+    plt.legend(loc="upper right")
+    
+    plt.show()
+    '''
+    '''
     plt.imshow(img2)
     plt.show()
     draw_hist([img, img2])
-else:
-    imgPath = input("give argument to the second image: ")
-    img2 = cv2.imread(imgPath)
-    plt.imshow(img2)
-    plt.show()
-    draw_hist([img, img2])
-'''
-
-print("Now applying cdf to the original image, histogram equalization ")
-new_img, original_hist, new_hist, transform_func = equalize_hist(img)
-
-cv2.imshow("new_img", new_img)
-cv2.imwrite("new_img.png", new_img)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
-
-plt.plot(original_hist, color = 'b', ls = '--', label = 'Original Histogram')
-plt.legend(loc="upper right")
-plt.plot(new_hist, color = 'r', label = 'New Histogram')
-plt.legend(loc="upper right")
-
-plt.show()
-'''
-plt.imshow(img2)
-plt.show()
-draw_hist([img, img2])
-'''
+    '''
+main()
