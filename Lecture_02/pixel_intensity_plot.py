@@ -12,6 +12,7 @@ import random
 import sys
 import math as m
 import utils
+
 def cumsum(h):
     # credits:://gist.github.com/bistaumanga/6309599 
     list_ = []
@@ -177,14 +178,16 @@ def over_operator():
     Porter and Duff (1984)
     Blinn (1994a, 1994b)
     '''
-    '''
-    B                         = input("Background image path: ")
-    F                         = input("Foreground image path: ")
+    default_path = "/home/krshrimali/Pictures/"
+
+    B                         = default_path + str(input("Background image path: "))
+    F                         = default_path + str(input("Foreground image path: "))
     transparency_factor_alpha = float(input("Transparency Factor alpha: "))
     '''
     B = "/home/krshrimali/Pictures/background.jpg"
     F = "/home/krshrimali/Pictures/Kush.jpg"
     transparency_factor_alpha = float(0.5)
+    '''
 
     B_img                     = cv2.imread(B)
     F_img                     = cv2.imread(F)
